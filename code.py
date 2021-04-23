@@ -1,16 +1,16 @@
 English_Letters_no = 26
 Start_Capital_Letters = 65
-
+#This function takes a letter and encrypt it
 def encrypt_letter(letter,shift):
     index = ord(letter.upper()) - Start_Capital_Letters
     EncryptedIndex = (index+shift) % English_Letters_no
     return chr(Start_Capital_Letters + EncryptedIndex)
-
+#This function takes a letter and decrypt it
 def decrypt_letter(letter,shift):
     index = ord(letter.upper()) - Start_Capital_Letters
     DecryptedIndex = (index - shift + English_Letters_no) % English_Letters_no
     return chr(Start_Capital_Letters  +DecryptedIndex)
-
+#This function is the main encrypt function
 def CaesarCipherEncrypt(plainText,shift):
     EncryptedMessage=""
     for letter in plainText:
@@ -21,7 +21,7 @@ def CaesarCipherEncrypt(plainText,shift):
         else :
             EncryptedMessage += encrypt_letter(letter,shift)
     return EncryptedMessage
-
+#This function is the main decrypt function
 def CaesarCipherDecrypt(plainText,shift):
     DecryptedMessage=""
     for letter in plainText:
@@ -32,7 +32,7 @@ def CaesarCipherDecrypt(plainText,shift):
         else :
             DecryptedMessage += decrypt_letter(letter,shift)
     return DecryptedMessage
-
+#The main function of Caesar Cipher
 def CaesarCipher(plainText):
     shift = int(input("Enter The Shift Key : "))
     
@@ -54,14 +54,14 @@ def CaesarCipher(plainText):
         for word in plainText:
             DecryptedMessage += CaesarCipherDecrypt(word,shift) + " "
         print(DecryptedMessage)
-
+#This function returns the keyword with unique letters
 def unique_letters(Keyword):
     word = []
     for i in range(len(Keyword)):
         if Keyword[i] not in word :
             word.append(Keyword[i])
     return "".join(word)
-
+#This function forms the general Matrix
 def matrix(Keyword):
     Letters = [chr(n) for n in range(Start_Capital_Letters,Start_Capital_Letters+English_Letters_no)]
     Matrix = [[],[],[],[],[]]
@@ -78,7 +78,7 @@ def matrix(Keyword):
                 Matrix[row].append(Letters[0])
                 Letters = Letters[1:]
     return Matrix
-
+#This function convert the text to pairs
 def plainToPairs(plainText):
     pairs = []
     i=0
@@ -94,7 +94,7 @@ def plainToPairs(plainText):
                 pairs.append([plainText[i],"X"])
                 i+=1
     return pairs
-
+#This function gets the index of a character in the Matrix
 def get_index(letter,Matrix):
     for row in range(int(English_Letters_no**0.5)):
         for col in range(int(English_Letters_no**0.5)):
@@ -102,7 +102,7 @@ def get_index(letter,Matrix):
                 return row,col
     else:
         return None , None
-
+#This function is the main encrypt function
 def PlayFairEncryption(plainText,Matrix):
     EncryptedMessage = ""
     if(plainText.isalpha()):
@@ -149,7 +149,7 @@ def PlayFairEncryption(plainText,Matrix):
     else:
         EncryptedMessage += plainText
     return EncryptedMessage
-
+#This function is the main decrypt function
 def PlayFairDecryption(plainText,Matrix):
     DecryptedMessage = ""
     if(plainText.isalpha()):
@@ -196,7 +196,7 @@ def PlayFairDecryption(plainText,Matrix):
         DecryptedMessage += plainText
         
     return DecryptedMessage
-
+#This function is the main decrypt function
 def PlayFair(plainText):
     Keyword = input("Enter The Keyword : ")
     
@@ -206,7 +206,7 @@ def PlayFair(plainText):
     plainText = plainText.split(" ")
 
     Matrix = matrix(Keyword.upper())
-    print(Matrix)
+    
     Method = Input()
 
     if Method == 1:
@@ -220,14 +220,14 @@ def PlayFair(plainText):
         for word in plainText:
             DecryptedMessage += PlayFairDecryption(word,Matrix) + " "
         print(DecryptedMessage)
-        
 
+#This function gets the main input of the simulation
 def Input():
     Method = int(input("Enter The Method no. { 1- Encryption 2- Decryption } : "))
     while(Method not in [1,2]):
         Method = int(input("Enter The Method no. { 1- Encryption 2- Decryption } : "))
     return Method
-
+#The main function
 while True:
     plainText = input("Text : ")
     print("Enter The no. of Methodology you want : \n 1- Caesar Cipher 2- PlayFair")
